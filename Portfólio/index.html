@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfólio Futurista Henrique</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI', sans-serif;}
+  body{background:#111;color:#fff;overflow-x:hidden;scroll-behavior:smooth;}
+  a{text-decoration:none;color:inherit;}
+
+  /* Fundo com partículas */
+  body::before{
+    content:'';
+    position:fixed;
+    top:0; left:0; width:100%; height:100%;
+    background:linear-gradient(-45deg,#1f1c2c,#928dab,#4b6cb7,#1f1c2c);
+    background-size:400% 400%;
+    animation:gradientBG 20s ease infinite;
+    z-index:-2;
+  }
+  @keyframes gradientBG{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+
+  /* Partículas leves */
+  .particles{
+    position:fixed;width:100%;height:100%;z-index:-1;pointer-events:none;
+  }
+  .particle{
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    opacity:0.3;
+    animation:move 50s linear infinite;
+  }
+  @keyframes move{
+    0%{transform:translateY(0) translateX(0);}
+    100%{transform:translateY(-2000px) translateX(2000px);}
+  }
+
+  /* Cabeçalho futurista */
+  header{
+    position:fixed;top:0;width:100%;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);
+    display:flex;justify-content:space-between;align-items:center;padding:15px 50px;z-index:1000;box-shadow:0 4px 15px rgba(0,0,0,0.5);
+  }
+  .logo{font-size:24px;font-weight:bold;color:#ff5e57;letter-spacing:2px;cursor:pointer;transition:transform 0.3s;}
+  .logo:hover{transform:scale(1.1) rotate(-5deg);}
+  nav{display:flex;gap:30px;}
+  nav a{position:relative;transition:0.3s;font-weight:500;}
+  nav a::after{content:'';position:absolute;width:0;height:2px;bottom:-3px;left:0;background:#ff5e57;transition:0.3s;}
+  nav a:hover::after{width:100%;}
+
+  section{padding:100px 50px;min-height:100vh;transition:opacity 1s ease;}
+  h1,h2{margin-bottom:20px;}
+
+  /* Carrossel */
+  .carousel{position:relative;width:100%;max-width:1100px;margin:0 auto 50px auto;perspective:1400px;}
+  .carousel-track{display:flex;transition:transform 1s ease-in-out;}
+  .carousel-slide{min-width:100%;position:relative;transform-style:preserve-3d;transition:transform 1s ease,opacity 1s ease,box-shadow 0.8s;opacity:0.4;transform:rotateY(30deg) scale(0.7);box-shadow:0 10px 30px rgba(0,0,0,0.3);cursor:pointer;}
+  .carousel-slide.active{opacity:1;transform:rotateY(0deg) scale(1);z-index:5;box-shadow:0 25px 60px rgba(0,0,0,0.8);}
+  .carousel-slide img{width:100%;border-radius:20px;display:block;object-fit:cover;transition:transform 0.8s ease;}
+  .carousel-slide:hover{transform:scale(1.03) rotateY(0deg);box-shadow:0 30px 70px rgba(0,0,0,0.9);}
+  .project-button{position:absolute;bottom:20px;left:50%;transform:translateX(-50%) translateY(30px);background:#0d1952;color:#fff;padding:14px 32px;border-radius:35px;font-weight:bold;opacity:0;transition:all 0.6s, box-shadow 0.5s;box-shadow:0 8px 25px rgba(33, 14, 116, 0.5);}
+  .carousel-slide.active .project-button{opacity:1;transform:translateX(-50%) translateY(0);}
+  .project-button:hover{background:#0919f7;transform:translateX(-50%) translateY(-2px) scale(1.08);box-shadow:0 12px 35px rgba(28, 12, 100, 0.7);}
+
+  .carousel-indicators{display:flex;justify-content:center;gap:12px;margin-top:20px;}
+  .carousel-indicators button{width:16px;height:16px;border-radius:50%;border:none;background:rgba(255,255,255,0.6);transition:all 0.4s;box-shadow:0 0 5px rgba(255,255,255,0.3);}
+  .carousel-indicators button.active{background:#0d1952;transform:scale(1.6);box-shadow:0 0 18px rgba(19, 11, 124, 0.9);}
+
+  /* SOBRE MIM */
+  #sobre{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:50px;}
+  #sobre img{width:300px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.6);}
+  #sobre div{max-width:600px;}
+
+  /* CONTATOS */
+  #contatos form{display:flex;flex-direction:column;gap:20px;max-width:500px;margin:0 auto;}
+  #contatos input,#contatos textarea{padding:15px;border-radius:10px;border:none;outline:none;font-size:16px;}
+  #contatos button{padding:15px;border:none;border-radius:15px;background:#ff5e57;color:#fff;font-weight:bold;cursor:pointer;transition:0.3s;}
+  #contatos button:hover{background:#ff3b30;transform:scale(1.05);}
+
+  footer{text-align:center;padding:30px;background:rgba(0,0,0,0.8);}
+  @media(max-width:768px){header{flex-direction:column;gap:10px;}}
+
+  .Imagens{
+    width: 100px;
+  }
+
+  .Icones{
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    padding-bottom: 30px;
+  }
+</style>
+</head>
+<body>
+
+<div class="particles" id="particles"></div>
+
+<header>
+  <div class="logo">Henrique Soares Pedroso</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#sobre">Sobre Mim</a>
+    <a href="#contatos">Contatos</a>
+  </nav>
+</header>
+
+<section id="home">
+  <h1>Meus Projetos</h1>
+  <div class="carousel">
+    <div class="carousel-track">
+      <div class="carousel-slide active">
+        <img src="Imagens/Projeto Paulo Freire.png" alt="Projeto 1">
+        <a href="#" class="project-button" target="_blank">Ver Projeto</a>
+      </div>
+      <div class="carousel-slide">
+        <img src="Imagens/Jogo Interativo.png" alt="Projeto 2">
+        <a href="#" class="project-button" target="_blank">Ver Projeto</a>
+      </div>
+      <div class="carousel-slide">
+        <img src="Imagens/Projeto Linkedin.png" alt="Projeto 3">
+        <a href="#" class="project-button" target="_blank">Ver Projeto</a>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://picsum.photos/id/1020/900/500" alt="Projeto 4">
+        <a href="#" class="project-button" target="_blank">Ver Projeto</a>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://picsum.photos/id/1021/900/500" alt="Projeto 5">
+        <a href="#" class="project-button" target="_blank">Ver Projeto</a>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://picsum.photos/id/1022/900/500" alt="Projeto 6">
+        <a href="#" class="project-button" target="_blank">Ver Projeto</a>
+      </div>
+    </div>
+    <div class="carousel-indicators">
+      <button class="active"></button>
+      <button></button>
+      <button></button>
+      <button></button>
+      <button></button>
+      <button></button>
+    </div>
+  </div>
+</section>
+
+<section id="sobre">
+  <img src="Imagens/Henrique.png" alt="Henrique">
+  <div>
+    <h2>Sobre Mim</h2>
+    <p>Oi! Sou Henrique Soares, desenvolvedor web apaixonado por criar projetos interativos e modernos. Adoro transformar ideias em experiências digitais únicas. Meu objetivo é sempre inovar e entregar qualidade em cada projeto que desenvolvo.</p>
+  </div>
+</section>
+
+<section id="contatos">
+  <h2>Contatos</h2>
+  <form>
+    <input type="text" placeholder="Seu Nome" required>
+    <input type="email" placeholder="Seu Email" required>
+    <textarea rows="5" placeholder="Sua Mensagem" required></textarea>
+    <button type="submit">Enviar Mensagem</button>
+  </form>
+</section>
+
+<div class="Icones">
+  <a href="https://mail.google.com/mail/u/0/#inbox"><img class="Imagens" src="Imagens/Gmail Icon.png" alt=""></a>
+  <a href="https://github.com/projects"><img class="Imagens" src="Imagens/GitHub.png" alt=""></a>
+  <a href="https://www.figma.com/files/team/1344688486110751312/recents-and-sharing?fuid=1344688481927664913"><img class="Imagens" src="Imagens/Icone do Figma.png" alt=""></a>
+</div>
+
+<footer>
+  &copy; 2025 Henrique Soares. Todos os direitos reservados.
+</footer>
+
+<script>
+/* Carrossel */
+const track = document.querySelector('.carousel-track');
+const slides = Array.from(track.children);
+const indicators = Array.from(document.querySelectorAll('.carousel-indicators button'));
+let currentIndex = 0;
+
+function updateCarousel(index){
+  slides.forEach((slide,i)=>slide.classList.toggle('active', i===index));
+  const slideWidth = slides[0].getBoundingClientRect().width;
+  track.style.transform=`translateX(-${slideWidth*index}px)`;
+  indicators.forEach((dot,i)=>dot.classList.toggle('active',i===index));
+}
+
+indicators.forEach((dot,i)=>dot.addEventListener('click',()=>{ currentIndex=i; updateCarousel(currentIndex); }));
+setInterval(()=>{ currentIndex = (currentIndex===slides.length-1)?0:currentIndex+1; updateCarousel(currentIndex); },5000);
+window.addEventListener('resize',()=>updateCarousel(currentIndex));
+
+/* Partículas */
+const particleContainer = document.getElementById('particles');
+for(let i=0;i<50;i++){
+  const p = document.createElement('div');
+  p.classList.add('particle');
+  p.style.width = `${Math.random()*4 +2}px`;
+  p.style.height = p.style.width;
+  p.style.top = `${Math.random()*100}%`;
+  p.style.left = `${Math.random()*100}%`;
+  p.style.opacity = Math.random()*0.3+0.1;
+  particleContainer.appendChild(p);
+}
+</script>
+
+</body>
+</html>
+
