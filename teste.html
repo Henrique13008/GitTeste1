@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carrossel Interativo</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #f0f2f5;
+  }
+
+  .carousel {
+    position: relative;
+    width: 80%;
+    max-width: 900px;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .carousel-slide {
+    min-width: 100%;
+    transition: transform 0.5s ease-in-out;
+    position: relative;
+  }
+
+  .carousel-slide img {
+    width: 100%;
+    display: block;
+    border-radius: 15px;
+    object-fit: cover;
+  }
+
+  /* Botões de navegação */
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.7);
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s;
+  }
+
+  .carousel-button:hover {
+    background: rgba(255,255,255,1);
+  }
+
+  .prev {
+    left: 20px;
+  }
+
+  .next {
+    right: 20px;
+  }
+
+  /* Indicadores */
+  .carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+  }
+
+  .carousel-indicators button {
+    width: 12px;
+    height: 12px;
+    background: rgba(255,255,255,0.7);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .carousel-indicators button.active {
+    background: rgba(255,255,255,1);
+  }
+
+</style>
+</head>
+<body>
+
+<div class="carousel">
+  <div class="carousel-track">
+    <div class="carousel-slide"><img src="https://picsum.photos/id/1018/900/500" alt="Slide 1"></div>
+    <div class="carousel-slide"><img src="https://picsum.photos/id/1015/900/500" alt="Slide 2"></div>
+    <div class="carousel-slide"><img src="https://picsum.photos/id/1019/900/500" alt="Slide 3"></div>
+  </div>
+
+  <button class="carousel-button prev">&#10094;</button>
+  <button class="carousel-button next">&#10095;</button>
+
+  <div class="carousel-indicators">
+    <button class="active"></button>
+    <button></button>
+    <button></button>
+  </div>
+</div>
+
+<script>
+const track = document.querySelector('.carousel-track');
+const slides = Array.from(track.children);
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
+const indicators = Array.from(document.querySelectorAll('.carousel-indicators button'));
+let currentIndex = 0;
+
+// Função para atualizar posição do carrossel
+function updateCarousel(index) {
+  const slideWidth = slides[0].getBoundingClientRect().width;
+  track.style.transform = 'translateX(-' + slideWidth * index + 'px)';
+  
+  indicators.forEach((dot, i) => {
+    dot.classList.toggle('active', i === index);
+  });
+}
+
+// Botões de navegação
+prevButton.addEventListener('click', () => {
+  currentIndex = (currentIndex === 0) ? slides.length - 1 : currentIndex - 1;
+  updateCarousel(currentIndex);
+});
+
+nextButton.addEventListener('click', () => {
+  currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+  updateCarousel(currentIndex);
+});
+
+// Indicadores
+indicators.forEach((dot, i) => {
+  dot.addEventListener('click', () => {
+    currentIndex = i;
+    updateCarousel(currentIndex);
+  });
+});
+
+// Auto-slide a cada 5 segundos
+setInterval(() => {
+  currentIndex = (currentIndex === slides.length - 1) ? 0 : currentIndex + 1;
+  updateCarousel(currentIndex);
+}, 5000);
+
+window.addEventListener('resize', () => updateCarousel(currentIndex));
+</script>
+
+</body>
+</html>
